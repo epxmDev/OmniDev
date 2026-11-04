@@ -24,12 +24,11 @@ OmniDev is a developer analytics platform built in Rust. It analyzes Git history
 Everything runs locally. No telemetry, no account and no cloud synchronization.
 
 ## Screenshots
+### Repository overview
+![OmniDev overview](assets/screenshots/omnidev.png)
 
 ### Dashboard
 ![OmniDev Dashboard](assets/screenshots/dashboard.png)
-
-### Repository overview
-![OmniDev overview](assets/screenshots/omnidev.png)
 
 ### Analysis
 ![OmniDev Analysis](assets/screenshots/analyse.png)
