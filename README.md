@@ -1,11 +1,11 @@
-<div align="center">
+ <div align="center">
 
 ```
    ____  __  __ _   _ ___ ____  _______     __
   / __ \|  \/  | \ | |_ _|  _ \| ____\ \   / /
  | |  | | |\/| |  \| || || | | |  _|  \ \ / /
  | |__| | |  | | |\  || || |_| | |___  \ V /
-  \____/|_|  |_|_| \_|___|____/|_____|  \_/
+  \____/|_|  |_|_| \_|___|____/|_____|\___/
 ```
 
 **Track your code. Understand your growth.**
@@ -15,139 +15,322 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/epxmdev/omnidev?include_prereleases)](https://github.com/epxmdev/omnidev/releases)
 
+**A local-first developer activity analytics platform for your terminal.**
+
 </div>
 
-OmniDev is a local-first developer activity analytics platform for the terminal. It reads your Git history, computes statistics, language distribution, contribution heatmaps and reports, and shows them in an interactive dashboard. Everything runs on your machine: there is no telemetry, no account and no network access.
+OmniDev is a developer analytics platform built in Rust. It analyzes Git history, calculates development statistics, tracks language distribution and contribution activity, and presents everything in an interactive terminal dashboard.
 
-## Features
-
-- **Repository analysis** over every local and remote branch, with incremental synchronization.
-- **Developer statistics**: commits, contributors, insertions and deletions, streaks, averages, weekday and monthly activity, and repository distribution.
-- **Contribution heatmap** for the last 365 days, in the terminal and in the dashboard.
-- **Interactive dashboard** with responsive layouts, keyboard navigation, a help overlay and background refresh.
-- **Commit explorer** with author, date, text and repository filters, pagination and changed-file lists.
-- **Language distribution** estimated from line counts, excluding vendored, build, generated and binary files.
-- **Reports** in JSON, Markdown and CSV.
-- **Goals and achievements** based only on real data.
-- **Repository management**: register, scan directories, set a default, and stop tracking without touching files.
+Everything runs locally. No telemetry, no account and no cloud synchronization.
 
 ## Screenshots
 
-Screenshots of the dashboard and heatmap belong in `assets/screenshots/`. Capture them on your own terminal with `omnidev dashboard` and `omnidev heatmap`, then reference them here.
+### Dashboard
+![OmniDev Dashboard](assets/screenshots/dashboard.png)
+
+### Repository overview
+![OmniDev overview](assets/screenshots/omnidev.png)
+
+### Analysis
+![OmniDev Analysis](assets/screenshots/analyse.png)
+
+### Statistics
+![OmniDev Statistics](assets/screenshots/stats.png)
+
+## Features
+
+- **Repository analysis** — Analyze local and remote branches with incremental synchronization.
+- **Developer statistics** — Commits, contributors, insertions, deletions, streaks and activity averages.
+- **Contribution heatmap** — Visualize your activity over the last 365 days.
+- **Interactive dashboard** — Responsive terminal interface with keyboard navigation and help overlay.
+- **Commit explorer** — Filter commits by author, date, message and repository.
+- **Language distribution** — Estimate language usage from line counts.
+- **Reports** — Export activity data in JSON, Markdown and CSV.
+- **Goals and achievements** — Track development goals and progress.
+- **Repository management** — Register, scan and manage tracked repositories.
 
 ## Installation
 
-### From a release
+### Requirements
 
-Download the archive for your platform from the [Releases page](https://github.com/epxmdev/omnidev/releases), verify it against `SHA256SUMS.txt`, and place the `omnidev` binary on your `PATH`.
+- Rust 1.85 or newer
+- Cargo
+- Git
+- A C compiler and standard build tools
 
-### From source
+### CachyOS / Arch Linux
 
-You need Rust 1.85 or newer and a C compiler (SQLite is bundled).
+Install the build tools:
+
+```bash
+sudo pacman -Syu
+sudo pacman -S --needed base-devel git
+```
+
+Check your tools:
+
+```bash
+rustc --version
+cargo --version
+git --version
+```
+
+If Rust is missing, install it using [rustup](https://rustup.rs/).
+
+### Build from source
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/epxmdev/omnidev.git
 cd omnidev
+```
+
+Build and install:
+
+```bash
 cargo install --path .
 ```
 
-## Quick start
+Make sure Cargo's binary directory is in your PATH:
 
 ```bash
-omnidev init                      # create configuration and database
-cd ~/code/my-project
-omnidev analyze                   # read this repository's history
-omnidev stats --range 90d         # statistics for the last 90 days
-omnidev heatmap                   # contribution heatmap
-omnidev dashboard                 # interactive dashboard (press H for help)
+export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
-Track several repositories:
+Add this line to `~/.bashrc` or `~/.zshrc` to keep it permanently.
+
+Verify the installation:
+
+```bash
+omnidev --version
+omnidev --help
+```
+
+## First launch
+
+### 1. Initialize OmniDev
+
+```bash
+omnidev init
+```
+
+This initializes your local configuration and database.
+
+### 2. Analyze a repository
+
+Navigate to a Git repository:
+
+```bash
+cd ~/code/my-project
+```
+
+Analyze it:
+
+```bash
+omnidev analyze
+```
+
+You can also specify a path:
+
+```bash
+omnidev analyze --path ~/code/my-project
+```
+
+### 3. Open the dashboard
+
+```bash
+omnidev
+```
+
+Or explicitly:
+
+```bash
+omnidev dashboard
+```
+
+The dashboard runs directly in your terminal. Press `H` to open the help overlay and `Ctrl+C` to exit.
+
+### 4. Explore your activity
+
+```bash
+omnidev stats --range 90d
+omnidev heatmap
+omnidev commits
+omnidev languages
+```
+
+## Manage repositories
+
+Register a repository:
 
 ```bash
 omnidev projects add ~/code/api --name api
+```
+
+List tracked repositories:
+
+```bash
+omnidev projects list
+```
+
+Scan a directory for Git repositories:
+
+```bash
 omnidev projects scan --dir ~/code
-omnidev refresh                   # incremental update of everything tracked
+```
+
+Refresh tracked repositories:
+
+```bash
+omnidev refresh
 ```
 
 ## Command reference
 
 | Command | Description |
-| --- | --- |
-| `init` | Create configuration and database |
-| `analyze` | Analyze a repository and register it |
-| `stats` | Developer statistics for a range |
-| `heatmap` | Contribution heatmap |
-| `dashboard` | Interactive terminal dashboard |
-| `projects` | List, add, remove, set default and scan repositories |
-| `commits` | Explore commit history |
-| `languages` | Language distribution |
-| `report` | Export JSON, Markdown or CSV |
-| `goals` | Goals and achievements |
-| `config` | Show or change configuration |
-| `refresh` | Synchronize all tracked repositories |
-| `doctor` | Check installation and repository access |
-| `version` | Build and dependency versions |
+|---|---|
+| `omnidev init` | Initialize configuration and database |
+| `omnidev` | Open the dashboard |
+| `omnidev dashboard` | Launch the interactive dashboard |
+| `omnidev analyze` | Analyze the current repository |
+| `omnidev stats` | Display developer statistics |
+| `omnidev heatmap` | Display contribution activity |
+| `omnidev projects list` | List tracked repositories |
+| `omnidev projects add PATH` | Register a repository |
+| `omnidev projects scan` | Find repositories in a directory |
+| `omnidev refresh` | Refresh tracked repositories |
+| `omnidev commits` | Explore commit history |
+| `omnidev languages` | Display language statistics |
+| `omnidev report` | Generate an activity report |
+| `omnidev goals` | View goals and achievements |
+| `omnidev config` | Display configuration |
+| `omnidev doctor` | Check installation and access |
+| `omnidev --help` | Display available commands |
 
-The full reference, with every option, is in [docs/COMMANDS.md](docs/COMMANDS.md).
-
-## Configuration
-
-OmniDev reads `config.toml` from your platform configuration directory. See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for every key. Repositories are stored in the database, not the configuration file.
+For all available options, see [docs/COMMANDS.md](docs/COMMANDS.md).
 
 ## Examples
 
 ```bash
 omnidev commits --author "Ada" --range 30d --files
+
 omnidev report --format csv --output activity.csv
+
 omnidev report --format json --range 1y --repo api --output api-year.json
+
 omnidev goals set weekly-commits 5
-omnidev stats --from 2026-01-01 --to 2026-03-31
 ```
 
-A small library example that prints statistics for one path is in [`examples/`](examples/).
+## Configuration and privacy
 
-## Architecture overview
+OmniDev stores configuration and activity data locally.
 
-OmniDev is a single crate with a library and a thin binary. Git access goes through `git2`, storage through `rusqlite` with bundled SQLite, the interface through `ratatui` and `crossterm`. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for module boundaries and data flow, and [docs/DATABASE.md](docs/DATABASE.md) for the schema.
+It is designed to keep your development data on your machine. Your Git history and usage data are not uploaded to a remote service.
+
+See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for configuration options.
+
+## Troubleshooting
+
+### `omnidev: command not found`
+
+Make sure Cargo's binary directory is in your PATH:
+
+```bash
+export PATH="$HOME/.cargo/bin:$PATH"
+```
+
+### Build errors
+
+Check your Rust version and build tools:
+
+```bash
+rustc --version
+cargo --version
+gcc --version
+```
+
+On CachyOS:
+
+```bash
+sudo pacman -S --needed base-devel git
+```
+
+Then retry:
+
+```bash
+cargo install --path . -v
+```
+
+### Dashboard has no activity
+
+Initialize OmniDev and analyze at least one Git repository:
+
+```bash
+omnidev init
+cd ~/code/my-project
+omnidev analyze
+omnidev dashboard
+```
 
 ## Development
 
+Build the project:
+
 ```bash
 cargo build
+```
+
+Run it from source:
+
+```bash
 cargo run -- --help
 ```
 
-## Testing
+Run tests:
 
 ```bash
 cargo test --all-targets
 ```
 
-The suite has three layers:
+## Architecture
 
-- **Unit tests** cover statistics, streaks, heatmap levels, language detection, date ranges, formatting and report rendering.
-- **Integration tests** (`tests/sync_and_store.rs`) build Git repositories in temporary directories with explicit timestamps and time zones, then check synchronization, merges, empty and missing repositories, corruption handling, rebuilds and timezone behaviour.
-- **CLI tests** (`tests/cli.rs`) run the compiled binary against an isolated `OMNIDEV_HOME`.
+OmniDev is built in Rust with:
 
-Tests never read your own repositories.
+- `git2` for Git repository access
+- `rusqlite` for local database storage
+- `ratatui` for the terminal interface
+- `crossterm` for terminal interaction
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DATABASE.md).
 
 ## Roadmap
 
-- Background auto-refresh in the dashboard (the setting exists; the scheduler does not yet).
-- Screenshot and asciinema demonstrations.
-- Per-file ownership and churn analysis.
-- Configurable language map.
-- Packaged builds for Homebrew and winget.
+- Background dashboard refresh
+- More detailed file ownership and churn analysis
+- Configurable language mapping
+- Packaged builds for Homebrew and winget
 
 ## Contributing
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the code rules (no comments in source, no `unwrap` in production code) and the checks to run before opening a pull request.
+Contributions are welcome!
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a pull request.
 
 ## Security
 
-See [SECURITY.md](SECURITY.md) for the security model and how to report a vulnerability.
+See [SECURITY.md](SECURITY.md) for security information and vulnerability reporting.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+OmniDev is distributed under the MIT License. See [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+
+**Built with Rust. Made for developers.**
+
+[GitHub Repository](https://github.com/epxmdev/omnidev)
+
+</div>
