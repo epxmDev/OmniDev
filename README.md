@@ -10,16 +10,14 @@
 
 **Track your code. Understand your growth.**
 
-[![CI](https://github.com/YOUR_GITHUB_USER/omnidev/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USER/omnidev/actions/workflows/ci.yml)
+[![CI](https://github.com/epxmdev/omnidev/actions/workflows/ci.yml/badge.svg)](https://github.com/epxmdev/omnidev/actions/workflows/ci.yml)
 ![Rust](https://img.shields.io/badge/rust-1.85%2B-orange)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/YOUR_GITHUB_USER/omnidev?include_prereleases)](https://github.com/YOUR_GITHUB_USER/omnidev/releases)
+[![Release](https://img.shields.io/github/v/release/epxmdev/omnidev?include_prereleases)](https://github.com/epxmdev/omnidev/releases)
 
 </div>
 
 OmniDev is a local-first developer activity analytics platform for the terminal. It reads your Git history, computes statistics, language distribution, contribution heatmaps and reports, and shows them in an interactive dashboard. Everything runs on your machine: there is no telemetry, no account and no network access.
-
-> Replace `YOUR_GITHUB_USER` in the badges above with your repository owner once the repository exists.
 
 ## Features
 
@@ -41,14 +39,14 @@ Screenshots of the dashboard and heatmap belong in `assets/screenshots/`. Captur
 
 ### From a release
 
-Download the archive for your platform from the [Releases page](https://github.com/YOUR_GITHUB_USER/omnidev/releases), verify it against `SHA256SUMS.txt`, and place the `omnidev` binary on your `PATH`.
+Download the archive for your platform from the [Releases page](https://github.com/epxmdev/omnidev/releases), verify it against `SHA256SUMS.txt`, and place the `omnidev` binary on your `PATH`.
 
 ### From source
 
 You need Rust 1.85 or newer and a C compiler (SQLite is bundled).
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USER/omnidev.git
+git clone https://github.com/epxmdev/omnidev.git
 cd omnidev
 cargo install --path .
 ```

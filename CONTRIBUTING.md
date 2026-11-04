@@ -1,42 +1,53 @@
 # Contributing to OmniDev
 
-Thank you for helping improve OmniDev.
+Thank you for your interest in contributing!
 
-## Ground rules
+## Code rules
 
-- Source files contain no comments of any kind. Put explanations in Markdown under `docs/` or in this repository's documentation.
-- No `unwrap()` or `expect()` in production code, no `unsafe` without a written justification, and no swallowed errors.
-- Keep modules focused and avoid duplicated business logic.
-- Do not add dependencies without a clear need.
+- No comments in source code
+- No `unwrap` / `expect` in production code (use proper error handling)
+- Prefer `anyhow` / `thiserror` for errors
+- Keep the public API small and documented when needed
 
-## Development setup
+## Development workflow
 
-You need a Rust toolchain that supports edition 2024 (Rust 1.85 or newer) and a C compiler for the bundled SQLite.
+1. Fork the repository
+2. Create a feature branch from `main`
+3. Make your changes
+4. Run the checks:
 
 ```bash
-git clone <your fork>
-cd omnidev
-cargo build
+cargo fmt --check
+cargo clippy --all-targets -- -D warnings
 cargo test --all-targets
 ```
 
-## Before opening a pull request
+5. Open a pull request with a clear description
 
-Run the same gates CI runs:
+## Pull request guidelines
 
-```bash
-cargo fmt --all -- --check
-cargo clippy --all-targets --all-features -- -D warnings
-cargo test --all-targets
-cargo build --release
-```
+- Keep PRs focused (one feature or fix per PR)
+- Update the README or docs if you change user-facing behaviour
+- Add tests when it makes sense
 
-## Dependency pinning note
+## Reporting bugs
 
-`comfy-table` is pinned to 7.1.x in `Cargo.lock` because 7.2 requires a newer compiler than the declared MSRV. Do not run `cargo update -p comfy-table` without verifying the MSRV still builds.
+Use the GitHub issue templates. Include:
 
-## Commits and pull requests
+- OmniDev version (`omnidev version`)
+- Operating system
+- Steps to reproduce
+- Expected vs actual behaviour
 
-- Use Conventional Commit prefixes such as `feat:`, `fix:`, `docs:`, `test:` or `chore:`.
-- Describe behaviour changes in `CHANGELOG.md` under *Unreleased*.
-- Add tests for new behaviour. Tests must create their own repositories in temporary directories and never depend on a developer's personal repositories.
+## Feature requests
+
+Open an issue with the feature request template. Explain the use case clearly.
+
+## Security
+
+Please do **not** open public issues for security vulnerabilities.
+See [SECURITY.md](SECURITY.md) for the private reporting process.
+
+## Questions
+
+Feel free to open a discussion or an issue if something is unclear.

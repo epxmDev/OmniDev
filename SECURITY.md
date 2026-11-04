@@ -6,11 +6,21 @@ Security fixes are provided for the latest released minor version.
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for security problems. Report them privately
-through GitHub's "Report a vulnerability" feature on the repository's Security
-tab, or contact the maintainers through the address listed in the repository
-profile. Include the OmniDev version, your operating system, reproduction steps
-and the expected impact. You can expect an acknowledgement within a week.
+Please do **not** open a public issue for security problems.
+
+Report them privately through:
+
+- GitHub's "Report a vulnerability" feature on the repository's Security tab
+- Or contact the maintainers through the address listed in the repository profile
+
+Include:
+
+- OmniDev version (`omnidev version`)
+- Your operating system
+- Reproduction steps
+- Expected impact
+
+You can expect an acknowledgement within a week.
 
 ## Security model
 
